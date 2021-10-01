@@ -56,10 +56,4 @@ class User(AbstractBaseUser):
         self.activation_code = code
         self.save()
 
-    def send_activation_mail(self):
-        from django.core.mail import send_mail
-        message = f'Ваш код активации: {self.activation_code}'
-        send_mail('Активация аккаунта',
-                  message,
-                  'hello@gmail.com',
-                  [self.email])
+

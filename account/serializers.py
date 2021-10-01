@@ -4,6 +4,8 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from account.tasks import send_activation_mail
+
 User = get_user_model()
 
 
@@ -29,7 +31,7 @@ class RegistrationSerializer(serializers.Serializer):
     def create(self, attrs):
         user = User.objects.create_user(**attrs)
         user.create_activation_code()
-        user.send_activation_mail()
+        send_activation_mail(user.email, user.activation_code)
         return user
 
 
